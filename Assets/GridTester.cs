@@ -17,6 +17,8 @@ public class GridTester : MonoBehaviour
 
     public LayerMask layerMask;
 
+    public Vector3 RaycastOffset = new Vector3(0.4f, 0.5f, 0.4f);
+
     public List<GameObject> Gridsquares = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
@@ -92,30 +94,39 @@ public class GridTester : MonoBehaviour
         Gridsquares.Clear();
         List<Vector3> Positions = new List<Vector3>();
 
-        for (int x = (int)PlayerGridPosition.x - MaxMoveDistance; x < (int)PlayerGridPosition.x + MaxMoveDistance; x++)
+        for (int x = (int)PlayerGridPosition.x - MaxMoveDistance ; x < (int)PlayerGridPosition.x + MaxMoveDistance + 1; x++)
         {
-            for (int y = (int)PlayerGridPosition.y - MaxMoveDistance; y < (int)PlayerGridPosition.y + MaxMoveDistance; y++)
+            for (int y = (int)PlayerGridPosition.y - MaxMoveDistance; y < (int)PlayerGridPosition.y + MaxMoveDistance ; y++)
             {
-                for (int z = (int)PlayerGridPosition.z - MaxMoveDistance; z < (int)PlayerGridPosition.z + MaxMoveDistance; z++)
+                for (int z = (int)PlayerGridPosition.z - MaxMoveDistance; z < (int)PlayerGridPosition.z + MaxMoveDistance + 1; z++)
                 {
                     RaycastHit hit;
-                    bool hasHit = Physics.Raycast(new Vector3(x, y+ 0.5f, z), Vector3.down, out hit, Mathf.Infinity, layerMask);
+                    Vector3 RaycastOrigin = new Vector3(x + RaycastOffset.x, y + RaycastOffset.y, z + RaycastOffset.z);
+                    bool hasHit = Physics.Raycast(RaycastOrigin, Vector3.down, out hit, Mathf.Infinity, layerMask);
+                    Debug.DrawRay(RaycastOrigin, Vector3.down, Color.white, 5);
                     if (hasHit)
                     {
-                        // PATH FOUND
-                        if (Vector3.Distance(hit.point, PlayerGridPosition) <= MaxMoveDistance)
+                        Debug.DrawRay(RaycastOrigin, Vector3.down, Color.green, 5);
+                        Vector3 FoundValue = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                        Vector3 RoundedFoundValue = new Vector3(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.y), Mathf.FloorToInt(hit.point.z));
+                        // PATH FOUND                                          \/ here!!!!!
+                        if (Vector3.Distance(FoundValue, PlayerGridPosition) < MaxMoveDistance+ 2 && Vector3.Distance(RoundedFoundValue, PlayerGridPosition) > 0.5f)
                         {
                             // PATH WITHIN REACH
-                            Vector3 FoundValue = new Vector3(Mathf.RoundToInt(hit.point.x), Mathf.RoundToInt(hit.point.y), Mathf.RoundToInt(hit.point.z));
-                            Positions.Add(FoundValue);
+                            Debug.DrawRay(FoundValue + new Vector3(0,1,0), Vector3.down, Color.magenta, 5);
+                            if (!Positions.Contains(RoundedFoundValue))
+                            {
+                                Positions.Add(RoundedFoundValue);
+                            }
                         }
                         else
                         {
-                            // PATH OUTSIDE OF REACH
+
                         }
                     }
                     else
                     {
+
                         // PATH NOT FOUND
                     }
                 }
@@ -128,6 +139,7 @@ public class GridTester : MonoBehaviour
         {
             var g = Instantiate(Gridvisual);
             g.transform.position = CurrentPossibilities[x];
+            g.name = CurrentPossibilities[x].ToString();
 
             Gridsquares.Add(g);
         }
