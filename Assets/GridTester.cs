@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -58,11 +59,6 @@ public class GridTester : MonoBehaviour
         }
     }
 
-    void MovePlayer()
-    {
-    
-    }
-
     void DetermineMovementDirections(Vector3 Point)
     {
         //List<Vector3> Positions = new List<Vector3>();
@@ -88,26 +84,40 @@ public class GridTester : MonoBehaviour
 
     void GenerateCircle()
     {
+        Vector3 PlayerGridPosition = new Vector3(Mathf.RoundToInt(Player.transform.position.x), Mathf.RoundToInt(Player.transform.position.y), Mathf.RoundToInt(Player.transform.position.z));
         for( int i = 0; i< Gridsquares.Count; i++)
         {
             Destroy(Gridsquares[i]);
         }
+        Gridsquares.Clear();
         List<Vector3> Positions = new List<Vector3>();
 
-        int rotationstep = 360 / 8;
-        for (float x = 0; x <= 8; x ++)
+        for (int x = (int)PlayerGridPosition.x - MaxMoveDistance; x < (int)PlayerGridPosition.x + MaxMoveDistance; x++)
         {
-
-            for (float y = 0; y < MaxMoveDistance / (x * Mathf.Deg2Rad); y++)
+            for (int y = (int)PlayerGridPosition.y - MaxMoveDistance; y < (int)PlayerGridPosition.y + MaxMoveDistance; y++)
             {
-                var ang = rotationstep * x;
-                Vector3 Startingpos = Player.transform.position + new Vector3(Mathf.RoundToInt(Mathf.Cos(ang * Mathf.Deg2Rad)),0.5f, Mathf.RoundToInt(Mathf.Sin(ang * Mathf.Deg2Rad))) * y;
-                RaycastHit hit;
-                Debug.DrawRay(Startingpos, Vector3.down * 100f, Color.red, 100);
-                if (Physics.Raycast(Startingpos, Vector3.down,out hit, 5f, layerMask))
+                for (int z = (int)PlayerGridPosition.z - MaxMoveDistance; z < (int)PlayerGridPosition.z + MaxMoveDistance; z++)
                 {
-                    Debug.DrawRay(Startingpos, Vector3.down * 100f, Color.green, 100);
-                    Positions.Add(hit.point);
+                    RaycastHit hit;
+                    bool hasHit = Physics.Raycast(new Vector3(x, y+ 0.5f, z), Vector3.down, out hit, Mathf.Infinity, layerMask);
+                    if (hasHit)
+                    {
+                        // PATH FOUND
+                        if (Vector3.Distance(hit.point, PlayerGridPosition) <= MaxMoveDistance)
+                        {
+                            // PATH WITHIN REACH
+                            Vector3 FoundValue = new Vector3(Mathf.RoundToInt(hit.point.x), Mathf.RoundToInt(hit.point.y), Mathf.RoundToInt(hit.point.z));
+                            Positions.Add(FoundValue);
+                        }
+                        else
+                        {
+                            // PATH OUTSIDE OF REACH
+                        }
+                    }
+                    else
+                    {
+                        // PATH NOT FOUND
+                    }
                 }
             }
         }

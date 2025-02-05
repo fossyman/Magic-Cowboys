@@ -133,12 +133,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7135040}
   - component: {fileID: 7135041}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TestOverallGrid (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7135040
 Transform:
@@ -624,12 +624,12 @@ GameObject:
   m_Component:
   - component: {fileID: 967352211}
   - component: {fileID: 967352212}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TestOverallGrid (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &967352211
 Transform:
@@ -677,12 +677,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1429281795}
   - component: {fileID: 1429281796}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TestOverallGrid (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1429281795
 Transform:
@@ -762,12 +762,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1562136887}
   - component: {fileID: 1562136888}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TestOverallGrid (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1562136887
 Transform:
@@ -893,7 +893,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &2037376745
 BoxCollider:
@@ -948,7 +948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 2060440534}
-  MaxMoveDistance: 5
+  MaxMoveDistance: 2
   MaxHeightDistance: 1
   CurrentPossibilities: []
   Gridvisual: {fileID: 3342516538272929031, guid: 4f2cbcd7a2ae2b844a092cfbb7df7c2e,
