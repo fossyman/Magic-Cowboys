@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22cfaf958551cad41939a1fd0cbbdce2, type: 3}
+  m_Name: MDS_BasicIdle
+  m_EditorClassIdentifier: 
+  textures:
+  - {fileID: 21300000, guid: 67fb9939018da4a49b6b71867debed59, type: 3}
+  - {fileID: 21300000, guid: df6ba8fd1d963bd46987f97b9527b30d, type: 3}
+  - {fileID: 21300000, guid: d89db8bd4640231478f9a453c8b84be8, type: 3}
+  - {fileID: 21300000, guid: f6570e3962f639b4583a7287076b134b, type: 3}

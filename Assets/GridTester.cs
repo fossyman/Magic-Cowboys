@@ -12,7 +12,10 @@ public class GridTester : MonoBehaviour
     public GameObject Player;
     public int MaxMoveDistance;
     public int MaxHeightDistance;
-    public Vector3[] CurrentPossibilities;
+
+    public Vector3[] CurrentPositionPossibilities;
+    public Vector3[] CurrentRotationPossibilities;
+
     public GameObject Gridvisual;
 
     public LayerMask layerMask;
@@ -63,26 +66,9 @@ public class GridTester : MonoBehaviour
 
     void DetermineMovementDirections(Vector3 Point)
     {
-        //List<Vector3> Positions = new List<Vector3>();
-
-        //float rotationStep = 360 / 8;
-        //for (int x = 1; x < MaxMoveDistance; x++)
-        //{
-        //    for (int y = 0; y < 8; y++)
-        //    {
-        //        float ang = rotationStep * y;
-        //        Vector3 pos = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), 0, Mathf.Sin(ang * Mathf.Deg2Rad));
-        //        Positions.Add(pos);
-        //    }
-        //}
-        //CurrentPossibilities = Positions.ToArray();
-        //for (int x = 0; x < CurrentPossibilities.Length; x++)
-        //{
-        //    var g = Instantiate(Gridvisual);
-        //    g.transform.position = Player.transform.position - CurrentPossibilities[x];
-        //}
         GenerateCircle();
     }
+
 
     void GenerateCircle()
     {
@@ -93,7 +79,7 @@ public class GridTester : MonoBehaviour
         }
         Gridsquares.Clear();
         List<Vector3> Positions = new List<Vector3>();
-
+        List<Vector3> Rotations = new List<Vector3>();
         for (int x = (int)PlayerGridPosition.x - MaxMoveDistance ; x < (int)PlayerGridPosition.x + MaxMoveDistance + 1; x++)
         {
             for (int y = (int)PlayerGridPosition.y - MaxMoveDistance; y < (int)PlayerGridPosition.y + MaxMoveDistance ; y++)
@@ -109,14 +95,27 @@ public class GridTester : MonoBehaviour
                         Debug.DrawRay(RaycastOrigin, Vector3.down, Color.green, 5);
                         Vector3 FoundValue = new Vector3(hit.point.x, hit.point.y, hit.point.z);
                         Vector3 RoundedFoundValue = new Vector3(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.y), Mathf.FloorToInt(hit.point.z));
-                        // PATH FOUND                                          \/ here!!!!!
-                        if (Vector3.Distance(FoundValue, PlayerGridPosition) < MaxMoveDistance+ 2 && Vector3.Distance(RoundedFoundValue, PlayerGridPosition) > 0.5f)
+
+                        print("PATH " + RoundedFoundValue + " PLAYER " + PlayerGridPosition);
+                        // PATH FOUND
+                        if (Vector3.Distance(FoundValue, PlayerGridPosition) < MaxMoveDistance + 2 && (RoundedFoundValue.x != PlayerGridPosition.x || RoundedFoundValue.z != PlayerGridPosition.z))
                         {
+                            print(hit.normal);
                             // PATH WITHIN REACH
                             Debug.DrawRay(FoundValue + new Vector3(0,1,0), Vector3.down, Color.magenta, 5);
                             if (!Positions.Contains(RoundedFoundValue))
                             {
-                                Positions.Add(RoundedFoundValue);
+                                if (hit.normal.y == 1f)
+                                {
+                                    Positions.Add(new Vector3(RoundedFoundValue.x, RoundedFoundValue.y, RoundedFoundValue.z));
+                                    Rotations.Add(Vector3.zero);
+                                }
+                                else
+                                {
+                                    Positions.Add(new Vector3(RoundedFoundValue.x, RoundedFoundValue.y + 0.2f, RoundedFoundValue.z + 0.1f));
+                                    Rotations.Add(new Vector3(-45,0,0));
+                                }
+                                
                             }
                         }
                         else
@@ -133,13 +132,14 @@ public class GridTester : MonoBehaviour
             }
         }
 
-        CurrentPossibilities = Positions.ToArray();
-
-        for (int x = 0; x < CurrentPossibilities.Length; x++)
+        CurrentPositionPossibilities = Positions.ToArray();
+        CurrentRotationPossibilities = Rotations.ToArray();
+        for (int x = 0; x < CurrentPositionPossibilities.Length; x++)
         {
             var g = Instantiate(Gridvisual);
-            g.transform.position = CurrentPossibilities[x];
-            g.name = CurrentPossibilities[x].ToString();
+            g.transform.position = CurrentPositionPossibilities[x];
+            g.transform.rotation = Quaternion.Euler(CurrentRotationPossibilities[x]);
+            g.name = CurrentPositionPossibilities[x].ToString();
 
             Gridsquares.Add(g);
         }
