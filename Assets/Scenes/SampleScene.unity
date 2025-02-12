@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18198948, g: 0.22767743, b: 0.30740768, a: 1}
+  m_IndirectSpecularColor: {r: 0.1819898, g: 0.22767791, b: 0.30740863, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -253,8 +253,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CombatantContainer: {fileID: 157860826}
+  Characters: []
   CurrentlySelectedCharacter: {fileID: 2060440537}
-  SelectedCharacterIndicator: {fileID: 0}
+  Selector: {fileID: 1997658635}
 --- !u!1 &157860826
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +376,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.19616088, y: 0.4126005, z: -0.09147132, w: 0.8848247}
-  m_LocalPosition: {x: -12.69, y: 10, z: -10}
+  m_LocalPosition: {x: -12.69, y: 8.8, z: -10.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -861,7 +862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -266.1, y: 271.74}
+  m_AnchoredPosition: {x: -266.1, y: 256}
   m_SizeDelta: {x: 532.195, y: 203.4783}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &670843763
@@ -1519,6 +1520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448122172}
+  - component: {fileID: 1448122173}
   m_Layer: 0
   m_Name: CameraPoint
   m_TagString: Untagged
@@ -1535,13 +1537,26 @@ Transform:
   m_GameObject: {fileID: 1448122171}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1448122173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448122171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd032e44f99f254ab77bfadf73b70cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraTarget: {fileID: 0}
 --- !u!1 &1455341144
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,13 +2281,14 @@ GameObject:
   - component: {fileID: 1791586335}
   - component: {fileID: 1791586334}
   - component: {fileID: 1791586333}
+  - component: {fileID: 1791586337}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: CombatUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1791586333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2357,6 +2373,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1791586337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791586332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6631a4c46423b4fb484d195946203c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveButton: {fileID: 1950561267}
 --- !u!1 &1918761572
 GameObject:
   m_ObjectHideFlags: 0
@@ -2927,7 +2956,7 @@ GameObject:
   - component: {fileID: 2037376748}
   - component: {fileID: 2037376750}
   m_Layer: 6
-  m_Name: TestOverallGrid
+  m_Name: GridManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2995,7 +3024,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  RaycastOffset: {x: 0.5, y: 0.5, z: 0.5}
+  RaycastOffset: {x: 0.5, y: 2, z: 0.5}
   Gridsquares: []
 --- !u!65 &2037376748
 BoxCollider:

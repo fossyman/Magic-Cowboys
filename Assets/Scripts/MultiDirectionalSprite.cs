@@ -70,8 +70,6 @@ public class MultiDirectionalSprite : MonoBehaviour
 
     int GetRotationIndex(float LDOT, float FDOT)
     {
-        print("LDOT: " + Mathf.Abs(LDOT));
-        print("FDOT: " + Mathf.Abs(FDOT));
 
         if (FDOT < -0.58) // LEFT
             return 1;

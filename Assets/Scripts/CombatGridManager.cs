@@ -6,8 +6,10 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class GridTester : MonoBehaviour
+public class CombatGridManager : MonoBehaviour
 {
+
+    public static CombatGridManager Instance { get; private set; }
 
     public GameObject Player;
     public int MaxMoveDistance;
@@ -23,21 +25,18 @@ public class GridTester : MonoBehaviour
     public Vector3 RaycastOffset = new Vector3(0.4f, 0.5f, 0.4f);
 
     public List<GameObject> Gridsquares = new List<GameObject>();
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        Collider[] FoundColliders;
-        for (int x = 0; x < transform.childCount; x++)
-        {
-            for (int y = 0; y < transform.childCount; y++) { }
-            FoundColliders = GetComponents<Collider>();
-        }
+        if (Instance != null)
+            Destroy(this);
+        Instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && CombatSceneManager.Instance.CurrentlySelectedCharacter)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -57,34 +56,48 @@ public class GridTester : MonoBehaviour
                 {
                     Gridsquare = new Vector3(Mathf.FloorToInt(hit.point.x), hit.point.y, Mathf.FloorToInt(hit.point.z));
                 }
-                //print("REAL: " + hit.point + " GRID VER.: " + Gridsquare);
-                Player.transform.position = Gridsquare;
-                DetermineMovementDirections(Player.transform.position);
+
+                switch (CombatSceneManager.Instance.CurrentlySelectedCharacter.State)
+                {
+                    case CharacterManager.CharacterState.Idle:
+                        ClearGridVisuals();
+                        break;
+                    case CharacterManager.CharacterState.Moving:
+                        CombatSceneManager.Instance.CurrentlySelectedCharacter.AttemptMoveToNewPoint(Gridsquare);
+                        ClearGridVisuals();
+                        break;
+                    case CharacterManager.CharacterState.Attacking:
+                        ClearGridVisuals();
+                        break;
+                    case CharacterManager.CharacterState.Dead:
+                        ClearGridVisuals();
+                        break;
+                }
             }
         }
     }
 
-    void DetermineMovementDirections(Vector3 Point)
+    public void ClearGridVisuals()
     {
-        GenerateCircle();
-    }
-
-
-    void GenerateCircle()
-    {
-        Vector3 PlayerGridPosition = new Vector3(Mathf.RoundToInt(Player.transform.position.x), Mathf.RoundToInt(Player.transform.position.y), Mathf.RoundToInt(Player.transform.position.z));
-        for( int i = 0; i< Gridsquares.Count; i++)
+        for (int i = 0; i < Gridsquares.Count; i++)
         {
             Destroy(Gridsquares[i]);
         }
+    }
+
+
+    public void GenerateMovementCircle(Vector3 _Position,int _Radius)
+    {
+        Vector3 PlayerGridPosition = new Vector3(Mathf.RoundToInt(_Position.x), Mathf.RoundToInt(_Position.y), Mathf.RoundToInt(_Position.z));
+        ClearGridVisuals();
         Gridsquares.Clear();
         List<Vector3> Positions = new List<Vector3>();
         List<Vector3> Rotations = new List<Vector3>();
-        for (int x = (int)PlayerGridPosition.x - MaxMoveDistance ; x < (int)PlayerGridPosition.x + MaxMoveDistance + 1; x++)
+        for (int x = (int)PlayerGridPosition.x - _Radius; x < (int)PlayerGridPosition.x + _Radius + 1; x++)
         {
-            for (int y = (int)PlayerGridPosition.y - MaxMoveDistance; y < (int)PlayerGridPosition.y + MaxMoveDistance ; y++)
+            for (int y = (int)PlayerGridPosition.y - _Radius; y < (int)PlayerGridPosition.y + _Radius; y++)
             {
-                for (int z = (int)PlayerGridPosition.z - MaxMoveDistance; z < (int)PlayerGridPosition.z + MaxMoveDistance + 1; z++)
+                for (int z = (int)PlayerGridPosition.z - _Radius; z < (int)PlayerGridPosition.z + _Radius + 1; z++)
                 {
                     RaycastHit hit;
                     Vector3 RaycastOrigin = new Vector3(x + RaycastOffset.x, y + RaycastOffset.y, z + RaycastOffset.z);
@@ -98,7 +111,7 @@ public class GridTester : MonoBehaviour
 
                         print("PATH " + RoundedFoundValue + " PLAYER " + PlayerGridPosition);
                         // PATH FOUND
-                        if (Vector3.Distance(FoundValue, PlayerGridPosition) < MaxMoveDistance + 2 && (RoundedFoundValue.x != PlayerGridPosition.x || RoundedFoundValue.z != PlayerGridPosition.z))
+                        if (Vector3.Distance(FoundValue, PlayerGridPosition) < _Radius + 2 && (RoundedFoundValue.x != PlayerGridPosition.x || RoundedFoundValue.z != PlayerGridPosition.z))
                         {
                             print(hit.normal);
                             // PATH WITHIN REACH
@@ -143,6 +156,31 @@ public class GridTester : MonoBehaviour
 
             Gridsquares.Add(g);
         }
+    }
+
+    public Vector3[] CalculateGridDistance(Vector3 _value1, Vector3 _value2, float _distanceValue = 1)
+    {
+        Vector3 val1 = CalculateGridSquare(_value1);
+        Vector3 val2 = CalculateGridSquare(_value2);
+        float Distance = Vector2.Distance(new Vector2(val1.x, val1.z), new Vector2(val2.x, val2.z));
+        print("CHECKING DISTANCE OF :  " + Distance);
+        Debug.DrawRay(val1, Vector3.down, Color.blue, 100);
+        Debug.DrawRay(val2, Vector3.down, Color.red, 100);
+        if (Mathf.RoundToInt(Distance) <= _distanceValue + 0.5f)
+        {
+            Vector3[] CombinedValues = new Vector3[2];
+            CombinedValues[0] = val1;
+            CombinedValues[1] = _value2;
+            print("MOVEABLE : " + CombinedValues.Length);
+            return CombinedValues;
+        }
+        print("Position is too far");
+        return new Vector3[0];
+    }
+
+    public Vector3 CalculateGridSquare(Vector3 _value)
+    {
+        return new Vector3(Mathf.RoundToInt(_value.x), Mathf.RoundToInt(_value.y), Mathf.RoundToInt(_value.z));
     }
 
 }

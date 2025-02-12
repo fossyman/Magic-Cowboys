@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10121bd7c948a6743a2fc8c15d8de97d, type: 3}
   m_Name: COMP_TestCharacter
   m_EditorClassIdentifier: 
-  MoveDistance: 1
+  MoveDistance: 2
   IdleSprite: {fileID: 11400000, guid: c5a53b4591668fd4eb7e3c37aeb89e67, type: 2}
