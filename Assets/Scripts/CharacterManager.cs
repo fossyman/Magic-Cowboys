@@ -6,5 +6,7 @@ public class CharacterManager : MonoBehaviour
     public SO_CharacterData CharacterData;
     [SerializeField]
     private MultiDirectionalSprite Sprite;
+    [SerializeField]
+    private GameObject SelectedSprite;
 
 }

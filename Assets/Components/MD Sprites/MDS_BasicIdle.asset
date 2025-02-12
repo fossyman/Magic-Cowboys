@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MDS_BasicIdle
   m_EditorClassIdentifier: 
   textures:
-  - {fileID: 21300000, guid: 67fb9939018da4a49b6b71867debed59, type: 3}
-  - {fileID: 21300000, guid: df6ba8fd1d963bd46987f97b9527b30d, type: 3}
-  - {fileID: 21300000, guid: d89db8bd4640231478f9a453c8b84be8, type: 3}
-  - {fileID: 21300000, guid: f6570e3962f639b4583a7287076b134b, type: 3}
+  - {fileID: 21300000, guid: 9243e5123afb7a748ae17ddd06fc4a40, type: 3}
+  - {fileID: 21300000, guid: 06067757c58b9e04a87d20417d0c2cbb, type: 3}
+  - {fileID: 21300000, guid: 5498bedbd906fb74a977ff46caa9b06f, type: 3}
+  - {fileID: 21300000, guid: 6f0a42f3b68fb95469b29e624419b4f7, type: 3}
