@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Burst.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
@@ -31,50 +32,6 @@ public class CombatGridManager : MonoBehaviour
         if (Instance != null)
             Destroy(this);
         Instance = this;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && CombatSceneManager.Instance.CurrentlySelectedCharacter)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            bool hasHit = Physics.Raycast(ray, out hit,Mathf.Infinity,layerMask);
-
-            if (hasHit)
-            {
-                Vector3 Gridsquare;
-                float Normal = Vector3.Angle(Vector3.up, hit.normal);
-                print(Normal * Mathf.Deg2Rad);
-                if (Normal > 0)
-                {
-                    Gridsquare = new Vector3(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.y) +0.5f, Mathf.FloorToInt(hit.point.z));
-                }
-                else
-                {
-                    Gridsquare = new Vector3(Mathf.FloorToInt(hit.point.x), hit.point.y, Mathf.FloorToInt(hit.point.z));
-                }
-
-                switch (CombatSceneManager.Instance.CurrentlySelectedCharacter.State)
-                {
-                    case CharacterManager.CharacterState.Idle:
-                        ClearGridVisuals();
-                        break;
-                    case CharacterManager.CharacterState.Moving:
-                        CombatSceneManager.Instance.CurrentlySelectedCharacter.AttemptMoveToNewPoint(Gridsquare);
-                        ClearGridVisuals();
-                        break;
-                    case CharacterManager.CharacterState.Attacking:
-                        ClearGridVisuals();
-                        break;
-                    case CharacterManager.CharacterState.Dead:
-                        ClearGridVisuals();
-                        break;
-                }
-            }
-        }
     }
 
     public void ClearGridVisuals()
@@ -163,10 +120,10 @@ public class CombatGridManager : MonoBehaviour
         Vector3 val1 = CalculateGridSquare(_value1);
         Vector3 val2 = CalculateGridSquare(_value2);
         float Distance = Vector2.Distance(new Vector2(val1.x, val1.z), new Vector2(val2.x, val2.z));
-        print("CHECKING DISTANCE OF :  " + Distance);
-        Debug.DrawRay(val1, Vector3.down, Color.blue, 100);
-        Debug.DrawRay(val2, Vector3.down, Color.red, 100);
-        if (Mathf.RoundToInt(Distance) <= _distanceValue + 0.5f)
+
+        Distance = Mathf.FloorToInt(Distance);
+        print("CHECKING DISTANCE OF :  " + Distance + " WITH " + _distanceValue);
+        if (Distance <= _distanceValue)
         {
             Vector3[] CombinedValues = new Vector3[2];
             CombinedValues[0] = val1;
@@ -180,7 +137,7 @@ public class CombatGridManager : MonoBehaviour
 
     public Vector3 CalculateGridSquare(Vector3 _value)
     {
-        return new Vector3(Mathf.RoundToInt(_value.x), Mathf.RoundToInt(_value.y), Mathf.RoundToInt(_value.z));
+        return new Vector3(Mathf.FloorToInt(_value.x), Mathf.FloorToInt(_value.y), Mathf.FloorToInt(_value.z));
     }
 
 }

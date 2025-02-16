@@ -1,4 +1,3 @@
-using Unity.Android.Types;
 using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
@@ -10,13 +9,20 @@ public class CharacterManager : MonoBehaviour
     [SerializeField]
     private GameObject SelectedSprite;
 
-    public enum CharacterState{Idle,Moving,Attacking,Dead};
+    public int Health;
+
+    public enum CharacterState{Idle,Moving,PlanningAttack,Attacking,Dead};
 
     [SerializeField]
     public CharacterState State;
 
 
     private Vector3 MovementVelocity;
+
+    public void Start()
+    {
+        Health = CharacterData.HealthCapacity;
+    }
 
     public void AttemptMoveToNewPoint(Vector3 _NewPosition)
     {
@@ -31,10 +37,11 @@ public class CharacterManager : MonoBehaviour
 
     public void SmoothMovePosition(Vector3 _targetPosition)
     {
-        while (transform.position != _targetPosition)
-        {
-            transform.position = Vector3.SmoothDamp(transform.position, _targetPosition, ref MovementVelocity, 0.5f);
-        }
+        transform.position = _targetPosition;
+        //while (transform.position != _targetPosition)
+        //{
+        //    transform.position = Vector3.SmoothDamp(transform.position, _targetPosition, ref MovementVelocity, 0.5f);
+        //}
     }
 
 }

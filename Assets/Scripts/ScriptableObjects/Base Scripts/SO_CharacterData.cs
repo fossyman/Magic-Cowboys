@@ -11,4 +11,7 @@ public class SO_CharacterData: ScriptableObject
 
     public SO_MDSprite IdleSprite;
 
+    public SO_AbilityData[] Abilities;
+
+    public int HealthCapacity = 10;
 }

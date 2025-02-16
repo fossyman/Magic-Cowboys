@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class CombatUIManager : MonoBehaviour
 {
     public Button MoveButton;
+    public GameObject AbilityButtonPrefab;
+    public GameObject AbilityArea;
+    public SO_AbilityData[] CurrentAbilities;
     public static CombatUIManager Instance;
 
     private void Awake()
@@ -22,10 +25,26 @@ public class CombatUIManager : MonoBehaviour
         MoveButton.onClick.AddListener(ActivateMovement);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateAvailableAbilities(SO_AbilityData[] _Abilities)
     {
-        
+        CurrentAbilities = _Abilities;
+
+
+        for (int i = 0; i < AbilityArea.transform.childCount; i++)
+        {
+            Destroy(AbilityArea.transform.GetChild(i).gameObject);
+        }
+
+        if (CurrentAbilities.Length > 0)
+        {
+            for (int i = 0; i < CurrentAbilities.Length; i++)
+            {
+                int AbilityIDX = i;
+                GameObject Btn = Instantiate(AbilityButtonPrefab, AbilityArea.transform);
+                Btn.GetComponent<Button>().onClick.AddListener( delegate { ActivateAttack(CurrentAbilities[AbilityIDX]); } );
+                Btn.transform.GetChild(0).GetComponent<Image>().sprite = CurrentAbilities[i].Icon;
+            }
+        }
     }
 
     void ActivateMovement()
@@ -35,10 +54,27 @@ public class CombatUIManager : MonoBehaviour
         CombatGridManager.Instance.GenerateMovementCircle(SelectedCharacter.gameObject.transform.position, SelectedCharacter.CharacterData.MoveDistance);
     }
 
-    void ActivateAttack()
+    void ActivateAttack(SO_AbilityData _Ability)
     {
-        CharacterManager SelectedCharacter = CombatSceneManager.Instance.CurrentlySelectedCharacter;
-        SelectedCharacter.State = CharacterManager.CharacterState.Attacking;
-        CombatGridManager.Instance.GenerateMovementCircle(SelectedCharacter.gameObject.transform.position, SelectedCharacter.CharacterData.MoveDistance);
+        switch (_Ability.Cast)
+        {
+            case SO_AbilityData.CASTTYPE.PINPOINT:
+                List<CharacterManager> characters = CombatSceneManager.Instance.GetTargetableCharacters(CombatSceneManager.Instance.CurrentlySelectedCharacter.transform.position, _Ability.TargetRange);
+                print(characters.Count + " CHARACTERS FOUND");
+                if(characters.Count > 0)
+                {
+                    for (int i = 0; i < characters.Count; i++)
+                    {
+                     ///!!! ADD TARGETING PREFAB TO ABILITY DATA SO DESIGNERS CAN DECIDED PINPOint
+                    }
+                }
+                break;
+            case SO_AbilityData.CASTTYPE.AREA:
+                CharacterManager SelectedCharacter = CombatSceneManager.Instance.CurrentlySelectedCharacter;
+                SelectedCharacter.State = CharacterManager.CharacterState.Attacking;
+                CombatGridManager.Instance.GenerateMovementCircle(SelectedCharacter.gameObject.transform.position, _Ability.TargetRange);
+                break;
+        }
+
     }
 }
