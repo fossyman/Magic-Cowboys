@@ -12,10 +12,6 @@ public class CombatGridManager : MonoBehaviour
 
     public static CombatGridManager Instance { get; private set; }
 
-    public GameObject Player;
-    public int MaxMoveDistance;
-    public int MaxHeightDistance;
-
     public Vector3[] CurrentPositionPossibilities;
     public Vector3[] CurrentRotationPossibilities;
 
@@ -60,8 +56,9 @@ public class CombatGridManager : MonoBehaviour
                     Vector3 RaycastOrigin = new Vector3(x + RaycastOffset.x, y + RaycastOffset.y, z + RaycastOffset.z);
                     bool hasHit = Physics.Raycast(RaycastOrigin, Vector3.down, out hit, Mathf.Infinity, layerMask);
                     Debug.DrawRay(RaycastOrigin, Vector3.down, Color.white, 5);
-                    if (hasHit)
+                    if (hasHit && hit.collider.gameObject.tag != "Character")
                     {
+
                         Debug.DrawRay(RaycastOrigin, Vector3.down, Color.green, 5);
                         Vector3 FoundValue = new Vector3(hit.point.x, hit.point.y, hit.point.z);
                         Vector3 RoundedFoundValue = new Vector3(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.y), Mathf.FloorToInt(hit.point.z));
@@ -95,7 +92,7 @@ public class CombatGridManager : MonoBehaviour
                     }
                     else
                     {
-
+                        print("UNMOVEABLE POSITION DETECTED");
                         // PATH NOT FOUND
                     }
                 }

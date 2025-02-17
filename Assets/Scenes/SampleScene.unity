@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18198948, g: 0.22767743, b: 0.30740768, a: 1}
+  m_IndirectSpecularColor: {r: 0.1819898, g: 0.22767791, b: 0.30740863, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1718,6 +1718,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5986630570208693770, guid: ad5060b9bfdfc314e893bafdbe6320d6,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2359,17 +2364,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e09f2b1a1e9904a947629f355dd8fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 2060440534}
-  MaxMoveDistance: 1
-  MaxHeightDistance: 1
   CurrentPositionPossibilities: []
   CurrentRotationPossibilities: []
   Gridvisual: {fileID: 3342516538272929031, guid: 4f2cbcd7a2ae2b844a092cfbb7df7c2e,
     type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 64
-  RaycastOffset: {x: 0.5, y: 2, z: 0.5}
+    m_Bits: 192
+  RaycastOffset: {x: 0.5, y: 0.6, z: 0.5}
   Gridsquares: []
 --- !u!65 &2037376748
 BoxCollider:
@@ -2434,12 +2436,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 0, z: 1}
   m_Center: {x: 2.5, y: 0, z: 2.5}
---- !u!1 &2060440534 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4556602664656105343, guid: ad5060b9bfdfc314e893bafdbe6320d6,
-    type: 3}
-  m_PrefabInstance: {fileID: 1099015293935754846}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2060440536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4991270454597011728, guid: ad5060b9bfdfc314e893bafdbe6320d6,
@@ -2452,7 +2448,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1099015293935754846}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2060440534}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50702ee81afba6b498c1d6d6a562043a, type: 3}

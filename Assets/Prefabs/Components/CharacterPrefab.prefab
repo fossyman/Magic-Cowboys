@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8062135115751886617}
   - component: {fileID: 4204815869221481944}
   - component: {fileID: 1899292835980245743}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.5, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4991270454597011728}
@@ -110,9 +110,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4991270454597011728}
   - component: {fileID: 4982842093771654327}
-  m_Layer: 0
+  - component: {fileID: 5986630570208693770}
+  m_Layer: 7
   m_Name: CharacterPrefab
-  m_TagString: FRIEND
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,3 +149,26 @@ MonoBehaviour:
   CharacterData: {fileID: 11400000, guid: ae4a2db94577f0348bc1e7e52afad885, type: 2}
   Sprite: {fileID: 1899292835980245743}
   SelectedSprite: {fileID: 0}
+  Health: 0
+  State: 0
+--- !u!135 &5986630570208693770
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4556602664656105343}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0.5, y: 0.5, z: 0.5}
