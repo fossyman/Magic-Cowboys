@@ -18,6 +18,7 @@ public class CombatGridManager : MonoBehaviour
     public GameObject Gridvisual;
 
     public LayerMask layerMask;
+    public int[] Ignorelayers;
 
     public Vector3 RaycastOffset = new Vector3(0.4f, 0.5f, 0.4f);
 
@@ -54,46 +55,43 @@ public class CombatGridManager : MonoBehaviour
                 {
                     RaycastHit hit;
                     Vector3 RaycastOrigin = new Vector3(x + RaycastOffset.x, y + RaycastOffset.y, z + RaycastOffset.z);
-                    bool hasHit = Physics.Raycast(RaycastOrigin, Vector3.down, out hit, Mathf.Infinity, layerMask);
-                    Debug.DrawRay(RaycastOrigin, Vector3.down, Color.white, 5);
-                    if (hasHit && hit.collider.gameObject.tag != "Character")
+                    bool hasHit = Physics.Raycast(RaycastOrigin, Vector3.down, out hit, Mathf.Infinity, layerMask,QueryTriggerInteraction.Collide);
+                    print("CASTING");
+                    if (hasHit)
                     {
+                        print("HITTING " + hit.collider.gameObject.name + " ON LAYER " + hit.collider.gameObject.layer);
+                            Debug.DrawRay(RaycastOrigin, Vector3.down, Color.white, 5);
+                            Debug.DrawRay(RaycastOrigin, Vector3.down, Color.green, 5);
+                            Vector3 FoundValue = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                            Vector3 RoundedFoundValue = new Vector3(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.y), Mathf.FloorToInt(hit.point.z));
 
-                        Debug.DrawRay(RaycastOrigin, Vector3.down, Color.green, 5);
-                        Vector3 FoundValue = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-                        Vector3 RoundedFoundValue = new Vector3(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.y), Mathf.FloorToInt(hit.point.z));
-
-                        print("PATH " + RoundedFoundValue + " PLAYER " + PlayerGridPosition);
                         // PATH FOUND
-                        if (Vector3.Distance(FoundValue, PlayerGridPosition) < _Radius + 2 && (RoundedFoundValue.x != PlayerGridPosition.x || RoundedFoundValue.z != PlayerGridPosition.z))
+
+                        if (CheckIfMovementVisualCanBePlaced(hit))
                         {
-                            print(hit.normal);
-                            // PATH WITHIN REACH
-                            Debug.DrawRay(FoundValue + new Vector3(0,1,0), Vector3.down, Color.magenta, 5);
-                            if (!Positions.Contains(RoundedFoundValue))
+
+                            if (Vector3.Distance(FoundValue, PlayerGridPosition) < _Radius + 2)
                             {
-                                if (hit.normal.y == 1f)
+                                print(hit.normal);
+                                // PATH WITHIN REACH
+                                Debug.DrawRay(FoundValue + new Vector3(0, 1, 0), Vector3.down, Color.magenta, 5);
+                                if (!Positions.Contains(RoundedFoundValue))
                                 {
-                                    Positions.Add(new Vector3(RoundedFoundValue.x, RoundedFoundValue.y, RoundedFoundValue.z));
-                                    Rotations.Add(Vector3.zero);
+                                    if (hit.normal.y == 1f)
+                                    {
+                                        Positions.Add(new Vector3(RoundedFoundValue.x, RoundedFoundValue.y, RoundedFoundValue.z));
+                                        Rotations.Add(Vector3.zero);
+                                    }
+                                    else
+                                    {
+                                        Positions.Add(new Vector3(RoundedFoundValue.x, RoundedFoundValue.y + 0.2f, RoundedFoundValue.z + 0.1f));
+                                        Rotations.Add(new Vector3(-45, 0, 0));
+                                    }
+
                                 }
-                                else
-                                {
-                                    Positions.Add(new Vector3(RoundedFoundValue.x, RoundedFoundValue.y + 0.2f, RoundedFoundValue.z + 0.1f));
-                                    Rotations.Add(new Vector3(-45,0,0));
-                                }
-                                
+
                             }
                         }
-                        else
-                        {
-
-                        }
-                    }
-                    else
-                    {
-                        print("UNMOVEABLE POSITION DETECTED");
-                        // PATH NOT FOUND
                     }
                 }
             }
@@ -135,6 +133,21 @@ public class CombatGridManager : MonoBehaviour
     public Vector3 CalculateGridSquare(Vector3 _value)
     {
         return new Vector3(Mathf.FloorToInt(_value.x), Mathf.FloorToInt(_value.y), Mathf.FloorToInt(_value.z));
+    }
+
+
+
+    bool CheckIfMovementVisualCanBePlaced(RaycastHit hit)
+    {
+        bool CanPlace = true;
+        for (int i = 0; i < Ignorelayers.Length; i++)
+        {
+            print("CHECKING LAYER " + Ignorelayers[i]);
+            if (hit.collider.gameObject.layer == Ignorelayers[i])
+                CanPlace = false;
+        }
+
+        return CanPlace;
     }
 
 }

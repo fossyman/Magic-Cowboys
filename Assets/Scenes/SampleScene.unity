@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1819898, g: 0.22767791, b: 0.30740863, a: 1}
+  m_IndirectSpecularColor: {r: 0.18198948, g: 0.22767743, b: 0.30740768, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2370,8 +2370,9 @@ MonoBehaviour:
     type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 192
-  RaycastOffset: {x: 0.5, y: 0.6, z: 0.5}
+    m_Bits: 448
+  Ignorelayers: 0700000008000000
+  RaycastOffset: {x: 0.5, y: 1, z: 0.5}
   Gridsquares: []
 --- !u!65 &2037376748
 BoxCollider:

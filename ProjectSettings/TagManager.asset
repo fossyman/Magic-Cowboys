@@ -7,6 +7,7 @@ TagManager:
   - ENEMY
   - FRIEND
   - Character
+  - Blocker
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - UI
   - Ground
   - Character
-  - 
+  - Blocker
   - 
   - 
   - 
