@@ -9,6 +9,8 @@ public class CharacterManager : MonoBehaviour
     [SerializeField]
     private GameObject SelectedSprite;
 
+    public int CurrentTeam = 0;
+
     public int Health;
 
     public enum CharacterState{Idle,Moving,PlanningAttack,Attacking,Dead};
@@ -27,12 +29,17 @@ public class CharacterManager : MonoBehaviour
     public void AttemptMoveToNewPoint(Vector3 _NewPosition)
     {
         Vector3[] Positions = CombatGridManager.Instance.CalculateGridDistance(transform.position, _NewPosition, CharacterData.MoveDistance);
-        if (Positions.Length <= 0)
+        if (Positions.Length <= 1)
             return;
+        else
+        {
 
-
-        SmoothMovePosition(Positions[1]);
-        CombatSceneManager.Instance.Selector.transform.position = Positions[1];
+            if (Positions[1] != null)
+            {
+                SmoothMovePosition(Positions[1]);
+                CombatSceneManager.Instance.Selector.transform.position = Positions[1];
+            }
+        }
     }
 
     public void SmoothMovePosition(Vector3 _targetPosition)

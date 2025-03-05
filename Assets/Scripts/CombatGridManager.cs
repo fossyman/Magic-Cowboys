@@ -86,6 +86,7 @@ public class CombatGridManager : MonoBehaviour
                                     {
                                         Positions.Add(new Vector3(RoundedFoundValue.x, RoundedFoundValue.y + 0.2f, RoundedFoundValue.z + 0.1f));
                                         Rotations.Add(new Vector3(-45, 0, 0));
+                                        
                                     }
 
                                 }
@@ -121,8 +122,22 @@ public class CombatGridManager : MonoBehaviour
         if (Distance <= _distanceValue)
         {
             Vector3[] CombinedValues = new Vector3[2];
-            CombinedValues[0] = val1;
-            CombinedValues[1] = _value2;
+            
+
+            RaycastHit hit;
+            Vector3 RaycastOrigin = new Vector3(_value2.x + RaycastOffset.x, _value2.y + RaycastOffset.y, _value2.z + RaycastOffset.z);
+            bool hasHit = Physics.Raycast(RaycastOrigin, Vector3.down, out hit, Mathf.Infinity, layerMask, QueryTriggerInteraction.Collide);
+            if (CheckIfMovementVisualCanBePlaced(hit))
+            {
+                CombinedValues[0] = val1;
+                CombinedValues[1] = _value2;
+            }
+            else
+            {
+                CombinedValues = new Vector3[1];
+                CombinedValues[0] = val1;
+            }
+
             print("MOVEABLE : " + CombinedValues.Length);
             return CombinedValues;
         }
