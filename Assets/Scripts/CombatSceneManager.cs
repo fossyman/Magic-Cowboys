@@ -19,6 +19,9 @@ public class CombatSceneManager : MonoBehaviour
 
     public SelectedIndicatorManager Selector;
 
+    public List<GameObject> TargetingInstances = new List<GameObject>();
+    public List<CharacterManager> CurrentlyTargetedCharacters = new List<CharacterManager>();
+
     public int TurnIndex { get; private set; } = 0;
 
     public LayerMask layerMask;
@@ -48,7 +51,7 @@ public class CombatSceneManager : MonoBehaviour
             ProgressTurn();
         }
 
-            if (Input.GetMouseButtonDown(0) && CurrentlySelectedCharacter)
+            if (Input.GetMouseButtonDown(0) && CurrentlySelectedCharacter && CurrentlySelectedCharacter.State == CharacterManager.CharacterState.Moving)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -153,5 +156,17 @@ public class CombatSceneManager : MonoBehaviour
             LastIndex++;
         }
         Characters = FoundCharacters;
+    }
+
+
+
+    public void ClearTargetingInstances()
+    {
+        for (int i = 0; i < TargetingInstances.Count; i++)
+        {
+            Destroy(TargetingInstances[i]);
+        }
+
+        TargetingInstances.Clear();
     }
 }

@@ -18,7 +18,6 @@ public class CharacterManager : MonoBehaviour
     [SerializeField]
     public CharacterState State;
 
-
     private Vector3 MovementVelocity;
 
     public void Start()
@@ -49,6 +48,7 @@ public class CharacterManager : MonoBehaviour
         //{
         //    transform.position = Vector3.SmoothDamp(transform.position, _targetPosition, ref MovementVelocity, 0.5f);
         //}
+        State = CharacterState.Idle;
     }
 
 }

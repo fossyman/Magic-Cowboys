@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: AD_Crackshot
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: 604be43acecbec042af10630323d3305, type: 3}
+  TargetingObject: {fileID: 6479567287243393134, guid: 798bb61768c125141b358a676fb498d2,
+    type: 3}
   Effect: 0
   Cast: 1
   Modifiers: 

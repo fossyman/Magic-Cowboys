@@ -7,6 +7,8 @@ public class SO_AbilityData : ScriptableObject
 {
     public Sprite Icon;
 
+    public GameObject TargetingObject;
+
     public enum EFFECTTYPE {DAMAGE,HEALING,SHIELD }
     public EFFECTTYPE Effect;
 
@@ -21,5 +23,6 @@ public class SO_AbilityData : ScriptableObject
     public int Amount;
 
     public int CooldownTime;
+
     
 }

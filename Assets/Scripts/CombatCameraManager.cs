@@ -29,6 +29,8 @@ public class CombatCameraManager : MonoBehaviour
                 transform.position = Vector3.SmoothDamp(transform.position, CameraTarget.transform.position, ref CameraVelocity, Smoothtime);
             }
         }
+
+
     }
     public void SetCameraTarget(GameObject _target)
     {

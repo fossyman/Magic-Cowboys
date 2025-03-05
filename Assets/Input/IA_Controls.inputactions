@@ -1,0 +1,45 @@
+{
+    "name": "IA_Controls",
+    "maps": [
+        {
+            "name": "Default",
+            "id": "4419ea27-8a95-4c88-a1ff-6525813facfa",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Value",
+                    "id": "4a8a4b8d-3aff-4d28-9705-c2e36b8f6ebb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "96b95c93-a5a6-4a54-b3be-6731de46d620",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32fd59f5-b6c7-4614-9e5d-cf8606afc990",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
