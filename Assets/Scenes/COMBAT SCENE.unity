@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18198948, g: 0.22767743, b: 0.30740768, a: 1}
+  m_IndirectSpecularColor: {r: 0.1819898, g: 0.22767791, b: 0.30740863, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -258,6 +258,7 @@ MonoBehaviour:
   Selector: {fileID: 1997658635}
   TargetingInstances: []
   CurrentlyTargetedCharacters: []
+  CurrentAbility: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 192
@@ -833,7 +834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -266.1, y: 427.56622}
+  m_AnchoredPosition: {x: -266.1, y: 446}
   m_SizeDelta: {x: 532.195, y: 515.132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &670843763
@@ -1185,7 +1186,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1029447132}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1791586337}
+        m_TargetAssemblyTypeName: CombatUIManager, Assembly-CSharp
+        m_MethodName: AttackMenuButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1029447132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1844,6 +1857,10 @@ MonoBehaviour:
     type: 3}
   AbilityArea: {fileID: 670843761}
   CurrentAbilities: []
+  AttackMenuClosedPosition: {x: 498.5, y: -121.6, z: 0}
+  AttackMenuOpenPosition: {x: 498.5, y: 214.2, z: 0}
+  TargetAttackMenuPosition: {x: 498.5, y: -121.6, z: 0}
+  AttackMenuOpen: 1
 --- !u!1 &1918761572
 GameObject:
   m_ObjectHideFlags: 0

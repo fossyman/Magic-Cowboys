@@ -12,6 +12,11 @@ public class CombatUIManager : MonoBehaviour
     public SO_AbilityData[] CurrentAbilities;
     public static CombatUIManager Instance;
 
+    public Vector3 AttackMenuClosedPosition;
+    public Vector3 AttackMenuOpenPosition;
+    public Vector3 TargetAttackMenuPosition;
+    public bool AttackMenuOpen;
+
     private void Awake()
     {
         if (Instance != null)
@@ -23,6 +28,12 @@ public class CombatUIManager : MonoBehaviour
     void Start()
     {
         MoveButton.onClick.AddListener(ActivateMovement);
+        TargetAttackMenuPosition = AttackMenuClosedPosition;
+    }
+
+    private void Update()
+    {
+        AbilityArea.transform.position = Vector3.Lerp(AbilityArea.transform.position, TargetAttackMenuPosition,15*Time.deltaTime);
     }
 
     public void UpdateAvailableAbilities(SO_AbilityData[] _Abilities)
@@ -52,6 +63,7 @@ public class CombatUIManager : MonoBehaviour
         CharacterManager SelectedCharacter = CombatSceneManager.Instance.CurrentlySelectedCharacter;
         SelectedCharacter.State = CharacterManager.CharacterState.Moving;
         CombatGridManager.Instance.GenerateMovementCircle(SelectedCharacter.gameObject.transform.position, SelectedCharacter.CharacterData.MoveDistance);
+        SetAttackMenuOpenState(false);
     }
 
     void ActivateAttack(SO_AbilityData _Ability)
@@ -86,6 +98,19 @@ public class CombatUIManager : MonoBehaviour
                 break;
         }
 
+    }
+
+
+    public void AttackMenuButtonPressed()
+    {
+        AttackMenuOpen = !AttackMenuOpen;
+        TargetAttackMenuPosition = AttackMenuOpen ? AttackMenuOpenPosition : AttackMenuClosedPosition;
+    }
+
+    public void SetAttackMenuOpenState(bool Open)
+    {
+        AttackMenuOpen = Open;
+        TargetAttackMenuPosition = AttackMenuOpen ? AttackMenuOpenPosition : AttackMenuClosedPosition;
     }
 
 }
