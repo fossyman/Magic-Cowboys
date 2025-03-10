@@ -13,7 +13,7 @@ public class CombatSceneManager : MonoBehaviour
     private GameObject AllyContainer;
     private GameObject EnemyContainer;
 
-    public CharacterManager[] Characters;
+    public List<CharacterManager> Characters;
 
     public CharacterManager CurrentlySelectedCharacter;
 
@@ -21,7 +21,7 @@ public class CombatSceneManager : MonoBehaviour
 
     public List<GameObject> TargetingInstances = new List<GameObject>();
     public List<CharacterManager> CurrentlyTargetedCharacters = new List<CharacterManager>();
-
+    public SO_AbilityData CurrentAbility;
     public int TurnIndex { get; private set; } = 0;
 
     public LayerMask layerMask;
@@ -38,7 +38,7 @@ public class CombatSceneManager : MonoBehaviour
     {
         AllyContainer = CombatantContainer.transform.GetChild(0).gameObject;
         EnemyContainer = CombatantContainer.transform.GetChild(1).gameObject;
-        Characters = new CharacterManager[AllyContainer.transform.childCount + EnemyContainer.transform.childCount];
+        Characters = new List<CharacterManager>();
         BuildCharacterArray();
     }
 
@@ -51,7 +51,7 @@ public class CombatSceneManager : MonoBehaviour
             ProgressTurn();
         }
 
-            if (Input.GetMouseButtonDown(0) && CurrentlySelectedCharacter && CurrentlySelectedCharacter.State == CharacterManager.CharacterState.Moving)
+            if (Input.GetMouseButtonDown(0) && CurrentlySelectedCharacter)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -72,6 +72,8 @@ public class CombatSceneManager : MonoBehaviour
                         Gridsquare = new Vector3(Mathf.FloorToInt(hit.point.x), hit.point.y, Mathf.FloorToInt(hit.point.z));
                     }
 
+                    print(hit.collider.tag);
+
                     switch (CurrentlySelectedCharacter.State)
                     {
                         case CharacterManager.CharacterState.Idle:
@@ -81,8 +83,24 @@ public class CombatSceneManager : MonoBehaviour
                             CurrentlySelectedCharacter.AttemptMoveToNewPoint(Gridsquare);
                             CombatGridManager.Instance.ClearGridVisuals();
                             break;
-                        case CharacterManager.CharacterState.Attacking:
+                        case CharacterManager.CharacterState.PlanningAttack:
                             CombatGridManager.Instance.ClearGridVisuals();
+                        
+                            if(hit.collider.tag == "Character")
+                            {
+                                CharacterManager character = hit.collider.GetComponent<CharacterManager>();
+                                if (!character || character.CurrentTeam == CurrentlySelectedCharacter.CurrentTeam)
+                                {
+                                    return;
+                                }
+                                print("GOING TO ATTACK CHARACTER " + character.name);
+                                if (CurrentAbility.Effect == SO_AbilityData.EFFECTTYPE.DAMAGE)
+                                {
+                                    character.Damage(CurrentAbility.Amount);
+                                    ClearTargetingInstances();
+                                    CurrentlySelectedCharacter.State = CharacterManager.CharacterState.Idle;
+                                }
+                            }
                             break;
                         case CharacterManager.CharacterState.Dead:
                             CombatGridManager.Instance.ClearGridVisuals();
@@ -102,7 +120,7 @@ public class CombatSceneManager : MonoBehaviour
             }
         }
         TurnIndex++;
-        TurnIndex = TurnIndex > Characters.Length - 1 ? 0 : TurnIndex;
+        TurnIndex = TurnIndex > Characters.Count - 1 ? 0 : TurnIndex;
         UpdateTurnVisuals();
         CurrentlySelectedCharacter = GetActiveCharacter();
         CombatCameraManager.Instance.SetCameraTarget(Characters[TurnIndex].gameObject);
@@ -123,7 +141,8 @@ public class CombatSceneManager : MonoBehaviour
     {
         List<CharacterManager> FoundCharacters = new List<CharacterManager>();
         Vector3 OriginGridPos = CombatGridManager.Instance.CalculateGridSquare(Origin);
-        for (int i = 0; i < Characters.Length; i++)
+
+        for (int i = 0; i < Characters.Count; i++)
         {
             Vector3 CharacterPos = CombatGridManager.Instance.CalculateGridSquare(Characters[i].transform.position);
             if (Characters[i] != CurrentlySelectedCharacter && Vector2.Distance(new Vector2(OriginGridPos.x, OriginGridPos.z), new Vector2(CharacterPos.x, CharacterPos.z)) <= Range)
@@ -136,26 +155,16 @@ public class CombatSceneManager : MonoBehaviour
 
     void BuildCharacterArray()
     {
-        CharacterManager[] FoundCharacters = new CharacterManager[Characters.Length];
-        print(FoundCharacters.Length);
-
-        int LastIndex = 0;
-
         for (int i = 0; i < AllyContainer.transform.childCount; i++)
         {
             print("FOUND " + AllyContainer.transform.GetChild(i).gameObject.name);
-            FoundCharacters[LastIndex] = (AllyContainer.transform.GetChild(i).GetComponent<CharacterManager>());
-            LastIndex++;
+            Characters.Add( AllyContainer.transform.GetChild(i).GetComponent<CharacterManager>() );
         }
 
         for (int y = 0; y < EnemyContainer.transform.childCount; y++)
         {
-            print("FOUND " + EnemyContainer.transform.GetChild(y).gameObject.name);
-            print("ON INDEX " + LastIndex);
-            FoundCharacters[LastIndex] = (EnemyContainer.transform.GetChild(y).GetComponent<CharacterManager>());
-            LastIndex++;
+            Characters.Add(EnemyContainer.transform.GetChild(y).GetComponent<CharacterManager>());
         }
-        Characters = FoundCharacters;
     }
 
 

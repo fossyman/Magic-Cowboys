@@ -150,6 +150,7 @@ MonoBehaviour:
   CharacterData: {fileID: 11400000, guid: ae4a2db94577f0348bc1e7e52afad885, type: 2}
   Sprite: {fileID: 1899292835980245743}
   SelectedSprite: {fileID: 0}
+  CurrentTeam: 0
   Health: 0
   State: 0
 --- !u!135 &5986630570208693770

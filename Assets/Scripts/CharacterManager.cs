@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterManager : MonoBehaviour
+public class CharacterManager : MonoBehaviour,IDamageable
 {
     [SerializeField]
     public SO_CharacterData CharacterData;
@@ -19,6 +19,8 @@ public class CharacterManager : MonoBehaviour
     public CharacterState State;
 
     private Vector3 MovementVelocity;
+
+    public int HealthCapacity { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     public void Start()
     {
@@ -51,4 +53,24 @@ public class CharacterManager : MonoBehaviour
         State = CharacterState.Idle;
     }
 
+    void Damaged() { }
+
+    void Death()
+    {
+        CombatSceneManager.Instance.Characters.Remove(this);
+        Destroy(gameObject);
+    }
+
+    public void Damage(int Amount)
+    {
+        Health -= Amount;
+        if (Health < 0)
+        {
+            Death();
+        }
+        else
+        {
+            Damaged();
+        }
+    }
 }

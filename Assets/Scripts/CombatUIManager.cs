@@ -63,10 +63,12 @@ public class CombatUIManager : MonoBehaviour
             case SO_AbilityData.CASTTYPE.PINPOINT:
                 List<CharacterManager> characters = CombatSceneManager.Instance.GetTargetableCharacters(CombatSceneManager.Instance.CurrentlySelectedCharacter.transform.position, _Ability.TargetRange);
                 CombatSceneManager.Instance.CurrentlyTargetedCharacters = characters;
+                CombatSceneManager.Instance.CurrentAbility = _Ability;
                 print(characters.Count + " CHARACTERS FOUND");
                 
                 if(characters.Count > 0)
                 {
+                    CombatSceneManager.Instance.CurrentlySelectedCharacter.State = CharacterManager.CharacterState.PlanningAttack;
                     for (int i = 0; i < characters.Count; i++)
                     {
                         if (characters[i].CurrentTeam == CombatSceneManager.Instance.CurrentlySelectedCharacter.CurrentTeam)
@@ -74,7 +76,6 @@ public class CombatUIManager : MonoBehaviour
                         GameObject PinpointInstance = Instantiate(_Ability.TargetingObject);
                         PinpointInstance.transform.position = characters[i].transform.position;
                         CombatSceneManager.Instance.TargetingInstances.Add(PinpointInstance);
-                     
                     }
                 }
                 break;

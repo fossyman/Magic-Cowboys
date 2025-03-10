@@ -136,7 +136,7 @@ MonoBehaviour:
   Amt: 1
   Speed: 1
   Amp: 0.1
-  Offset: {x: 0, y: 2.16, z: 0}
+  Offset: {x: 0, y: 0.15, z: 0}
 --- !u!1 &6479567287243393134
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +146,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2279678061103873571}
-  - component: {fileID: 8353481912627007649}
   m_Layer: 0
   m_Name: TargetIndicator
   m_TagString: Untagged
@@ -171,21 +170,6 @@ Transform:
   - {fileID: 1146182695931754852}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8353481912627007649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6479567287243393134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f17f2a3dfb18424d9a887933fb5c430, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SelectorOffset: {x: 0, y: 1.8, z: 0}
-  Amplitude: 0.1
-  Frequency: 5
 --- !u!1 &8121290564748496750
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +181,7 @@ GameObject:
   - component: {fileID: 7088321122241880051}
   - component: {fileID: 375243651873601131}
   - component: {fileID: 7699974350871828687}
+  - component: {fileID: 4074986713073316404}
   m_Layer: 0
   m_Name: Indicator Sprite
   m_TagString: Untagged
@@ -269,3 +254,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4074986713073316404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8121290564748496750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7053e9071ec37f74a9814d520284cbe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amt: 0.8
+  Speed: 2
+  Amp: 0.1
+  Offset: {x: 0, y: 1.5, z: 0}
