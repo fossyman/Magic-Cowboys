@@ -38,6 +38,10 @@ public class SaveLoadManager : MonoBehaviour
     private void Start()
     {
         SaveloadPath = Application.persistentDataPath + "/" + SaveloadName + ".json";
+        if (CheckIfSaveExists() == false)
+        {
+            _GameData = new GameData();
+        }
     }
 
     public bool CheckIfSaveExists()

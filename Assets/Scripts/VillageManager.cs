@@ -21,8 +21,12 @@ public class VillageManager : MonoBehaviour
         PressAction.action.performed += Clicked;
 
         IFormatProvider provider = CultureInfo.InvariantCulture;
-        DateTime ParsedSaveTime = DateTime.Parse(CustomTime.ReturnParseableTime(SaveLoadManager.instance._GameData.SaveTime));
-        print("Attempting to parse: "+ ParsedSaveTime.TimeOfDay);
+
+        if (SaveLoadManager.instance._GameData.SaveTime != null)
+        {
+            DateTime ParsedSaveTime = DateTime.Parse(CustomTime.ReturnParseableTime(SaveLoadManager.instance._GameData.SaveTime));
+            print("Attempting to parse: " + ParsedSaveTime.TimeOfDay);
+        }
     }
 
     public void Clicked(InputAction.CallbackContext context)

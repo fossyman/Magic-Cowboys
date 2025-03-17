@@ -42,10 +42,12 @@ public class MineManager : MonoBehaviour,IInteractable
     {
         DateTime Time1 = DateTime.Parse(CustomTime.ReturnParseableTime(SaveLoadManager.instance._GameData.SaveTime));
         DateTime Time2 = DateTime.Parse(CustomTime.ReturnParseableTime(SaveLoadManager.instance._GameData.LastGoldCollectedTime));
+        if (Time1 == null || Time2 == null)
+            return;
         if(Time1.Day == Time2.Day)
         {
             Popup.SetActive(Time1.Day != Time2.Day);
-            HasBeenCollected = Time1.Day != Time2.Day;
+            HasBeenCollected = Time1.Day == Time2.Day;
         }
     }
 

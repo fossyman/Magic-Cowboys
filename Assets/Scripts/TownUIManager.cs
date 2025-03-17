@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TownUIManager : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class TownUIManager : MonoBehaviour
     public TextMeshProUGUI GoldText;
 
     public int GoldIndex = -1;
-    // Start is called before the first frame update
+    public bool IsMapOpen = false;
+    public GameObject MapScreen;
+    public GameObject DesertZoomMapScreen;
 
     private void Awake()
     {
@@ -39,12 +42,38 @@ public class TownUIManager : MonoBehaviour
     {
         if (GoldIndex == -1)
         {
-            GoldText.text = "Nah";
+            GoldText.text = "0";
             return;
         }
 
         GoldText.text = SaveLoadManager.instance._GameData.ItemData[GoldIndex].Quantity.ToString("#,#");
     }
+
+
+
+    public void MapOpenButton()
+    {
+        IsMapOpen = !IsMapOpen;
+
+        MapScreen.SetActive(IsMapOpen);
+    }
+
+    public void ZoomIntoSection(GameObject _Section)
+    {
+        DesertZoomMapScreen.SetActive(false);
+        _Section.SetActive(true);
+    }
+
+    public void CloseAllZoomIns()
+    {
+        DesertZoomMapScreen.SetActive(false);
+    }
+
+    public void OpenCombatScene(int SceneID)
+    {
+        SceneManager.LoadScene(SceneID);
+    }
+
 
 
 }
