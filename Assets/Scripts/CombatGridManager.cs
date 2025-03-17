@@ -60,7 +60,6 @@ public class CombatGridManager : MonoBehaviour
                     if (hasHit)
                     {
                         print("HITTING " + hit.collider.gameObject.name + " ON LAYER " + hit.collider.gameObject.layer);
-                            Debug.DrawRay(RaycastOrigin, Vector3.down, Color.white, 5);
                             Debug.DrawRay(RaycastOrigin, Vector3.down, Color.green, 5);
                             Vector3 FoundValue = new Vector3(hit.point.x, hit.point.y, hit.point.z);
                             Vector3 RoundedFoundValue = new Vector3(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.y), Mathf.FloorToInt(hit.point.z));
@@ -85,7 +84,7 @@ public class CombatGridManager : MonoBehaviour
                                     else
                                     {
                                         Positions.Add(new Vector3(RoundedFoundValue.x, RoundedFoundValue.y + 0.2f, RoundedFoundValue.z + 0.1f));
-                                        Rotations.Add(new Vector3(-45, 0, 0));
+                                        Rotations.Add(hit.normal);
                                         
                                     }
 

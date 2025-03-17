@@ -47,19 +47,19 @@ public class MultiDirectionalSprite : MonoBehaviour
             switch (RotationIDX)
             {
                 case 0:
-                    CharacterMaterialInstance.SetTexture("_CurrentSprite", CurrentSprite.textures[0].texture);
+                    CharacterMaterialInstance.SetTexture("_MainTex", CurrentSprite.textures[0].texture);
                     break;
                 case 1:
-                    CharacterMaterialInstance.SetTexture("_CurrentSprite", CurrentSprite.textures[1].texture);
+                    CharacterMaterialInstance.SetTexture("_MainTex", CurrentSprite.textures[1].texture);
                     break;
                 case 2:
-                    CharacterMaterialInstance.SetTexture("_CurrentSprite", CurrentSprite.textures[2].texture);
+                    CharacterMaterialInstance.SetTexture("_MainTex", CurrentSprite.textures[2].texture);
                     break;
                 case 3:
-                    CharacterMaterialInstance.SetTexture("_CurrentSprite", CurrentSprite.textures[3].texture);
+                    CharacterMaterialInstance.SetTexture("_MainTex", CurrentSprite.textures[3].texture);
                     break;
                 default:
-                    CharacterMaterialInstance.SetTexture("_CurrentSprite", CurrentSprite.textures[3].texture);
+                    CharacterMaterialInstance.SetTexture("_MainTex", CurrentSprite.textures[3].texture);
 
                     break;
 

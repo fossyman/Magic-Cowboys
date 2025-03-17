@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Select",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "4a8a4b8d-3aff-4d28-9705-c2e36b8f6ebb",
                     "expectedControlType": "Button",
                     "processors": "",

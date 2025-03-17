@@ -16,5 +16,4 @@ MonoBehaviour:
   IdleSprite: {fileID: 11400000, guid: c5a53b4591668fd4eb7e3c37aeb89e67, type: 2}
   Abilities:
   - {fileID: 11400000, guid: 0fbb477295879ff40a920b595781e8e2, type: 2}
-  - {fileID: 11400000, guid: 0fbb477295879ff40a920b595781e8e2, type: 2}
-  - {fileID: 11400000, guid: 0fbb477295879ff40a920b595781e8e2, type: 2}
+  HealthCapacity: 10

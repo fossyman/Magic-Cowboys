@@ -789,10 +789,10 @@
     "m_Guid": {
         "m_GuidSerialized": "ba635c25-8987-4859-a909-86396c4d84e8"
     },
-    "m_Name": "CurrentSprite",
+    "m_Name": "MainTex",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "CurrentSprite",
-    "m_DefaultReferenceName": "_CurrentSprite",
+    "m_RefNameGeneratedByDisplayName": "MainTex",
+    "m_DefaultReferenceName": "_MainTex",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -2630,7 +2630,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "dbc74ee50ad444de8917703cb613f5d5",
     "m_Id": 0,
-    "m_DisplayName": "CurrentSprite",
+    "m_DisplayName": "MainTex",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",

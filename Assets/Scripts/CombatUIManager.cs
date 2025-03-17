@@ -8,7 +8,7 @@ public class CombatUIManager : MonoBehaviour
 {
     public Button MoveButton;
     public GameObject AbilityButtonPrefab;
-    public GameObject AbilityArea;
+    public RectTransform AbilityArea;
     public SO_AbilityData[] CurrentAbilities;
     public static CombatUIManager Instance;
 
@@ -33,7 +33,7 @@ public class CombatUIManager : MonoBehaviour
 
     private void Update()
     {
-        AbilityArea.transform.position = Vector3.Lerp(AbilityArea.transform.position, TargetAttackMenuPosition,15*Time.deltaTime);
+        AbilityArea.localPosition = Vector3.Lerp(AbilityArea.localPosition, TargetAttackMenuPosition,15*Time.deltaTime);
     }
 
     public void UpdateAvailableAbilities(SO_AbilityData[] _Abilities)
