@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CombatUIManager : MonoBehaviour
 {
+    public Canvas canvas;
     public Button MoveButton;
     public GameObject AbilityButtonPrefab;
     public RectTransform AbilityArea;
@@ -16,6 +17,17 @@ public class CombatUIManager : MonoBehaviour
     public Vector3 AttackMenuOpenPosition;
     public Vector3 TargetAttackMenuPosition;
     public bool AttackMenuOpen;
+
+    public bool IsPressed;
+    public RectTransform CharacterPanel;
+    public enum MOUSESTATE {idle,dragging}
+    public MOUSESTATE CurrentMouseState = MOUSESTATE.idle;
+    public Vector3 MouseClickPos;
+
+    public CircleSpinTest CharacterCircle;
+    public bool CanRotateCharacters = true;
+
+    private Vector3 ScaledMousePosition;
 
     private void Awake()
     {
@@ -33,7 +45,48 @@ public class CombatUIManager : MonoBehaviour
 
     private void Update()
     {
+        ScaledMousePosition = Input.mousePosition / canvas.scaleFactor;
         AbilityArea.localPosition = Vector3.Lerp(AbilityArea.localPosition, TargetAttackMenuPosition,15*Time.deltaTime);
+        IsPressed = Input.GetMouseButton(0);
+        if (Input.GetMouseButtonDown(0))
+        {
+            MouseClickPos = ScaledMousePosition;
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            CanRotateCharacters = true;
+
+        }
+        if (IsPressed && MouseClickPos != Input.mousePosition)
+        {
+            CurrentMouseState = MOUSESTATE.dragging;
+        }
+        else
+        {
+            CurrentMouseState = MOUSESTATE.idle;
+        }
+
+        if (CurrentMouseState == MOUSESTATE.dragging)
+        {
+            if (Input.mousePosition.x % 25f == 1)
+            {
+                print("MODULO");
+                if (ScaledMousePosition.x < MouseClickPos.x)
+                {
+                    CharacterCircle.MoveLeft();
+                }
+                else if (ScaledMousePosition.x > MouseClickPos.x)
+                {
+                    CharacterCircle.MoveRight();
+                }
+            }
+        }
+    }
+
+
+    public void LateUpdate()
+    {
+
     }
 
     public void UpdateAvailableAbilities(SO_AbilityData[] _Abilities)

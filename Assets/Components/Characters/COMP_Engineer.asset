@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10121bd7c948a6743a2fc8c15d8de97d, type: 3}
+  m_Name: COMP_Engineer
+  m_EditorClassIdentifier: 
+  MoveDistance: 2
+  IdleSprite: {fileID: 11400000, guid: bac1930b666843840aed2475c27ba961, type: 2}
+  Abilities:
+  - {fileID: 11400000, guid: 0fbb477295879ff40a920b595781e8e2, type: 2}
+  HealthCapacity: 10

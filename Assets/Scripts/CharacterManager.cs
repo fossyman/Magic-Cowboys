@@ -25,6 +25,7 @@ public class CharacterManager : MonoBehaviour,IDamageable
     public void Start()
     {
         Health = CharacterData.HealthCapacity;
+        Sprite.CurrentSprite = CharacterData.IdleSprite;
     }
 
     public void AttemptMoveToNewPoint(Vector3 _NewPosition)
